@@ -6,7 +6,7 @@
 #    By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/25 14:42:29 by sarayapa          #+#    #+#              #
-#    Updated: 2026/07/25 15:02:28 by sarayapa         ###   ########.fr        #
+#    Updated: 2026/07/25 15:08:18 by sarayapa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ $(NAME): $(SRCS_O)
 
 norm:
 	@echo "========= INCLUDES =========="
-	@norminette ./include
+	@norminette ./includes
 	@echo "========= SOURCES ==========="
 	@norminette $(SRCS)
 	@echo "========= LIBFT ============="

@@ -6,7 +6,7 @@
 #    By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/29 17:32:46 by sarayapa          #+#    #+#              #
-#    Updated: 2026/07/25 14:53:57 by sarayapa         ###   ########.fr        #
+#    Updated: 2026/07/25 15:10:05 by sarayapa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,9 @@ FILES = ft_atoi.c  ft_isalnum.c  ft_isalpha.c \
 		ft_lstadd_back_bonus.c ft_lstclear_bonus.c ft_lstdelone_bonus.c \
 		ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstmap_bonus.c
 
-SRCS = src/
-BUILD = build/
-INC = -I include
+SRCS = srcs/
+BUILD = builds/
+INC = -I includes
 
 SRCS_O = $(addprefix $(BUILD), $(FILES:.c=.o))
 
