@@ -1,5 +1,5 @@
-builds/
-libft/builds/
-/libft/libft.a
-minishell
-*.o
+#builds/
+#libft/builds/
+#/libft/libft.a
+#minishell
+#*.o
