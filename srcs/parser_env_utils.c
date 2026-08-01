@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser_env_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/25 14:49:02 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/07/25 15:05:40 by sarayapa         ###   ########.fr       */
+/*   Created: 2026/08/01 16:52:44 by sarayapa          #+#    #+#             */
+/*   Updated: 2026/08/01 16:53:41 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char **argv, char **envp)
+void	free_env(t_env *env)
 {
-	(void)argc;
-	(void)envp;
-	if(argv != 0)
-		return (1);
-	return (0);
+	t_env	*next;
+
+	while (env)
+	{
+		next = env->next;
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = next;
+	}
 }

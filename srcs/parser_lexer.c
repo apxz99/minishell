@@ -6,8 +6,71 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 16:26:17 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/07/25 16:26:30 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/08/01 17:20:41 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_token	*read_operator(const char *input, int *i)
+{
+	if (input[*i] == '|')
+		return (*i += 1, new_token("|", TOKEN_PIPE));
+	else if (input[*i] == '<' && input[*i + 1] == '<')
+		return (*i += 2, new_token("<<", TOKEN_HEREDOC));
+	else if (input[*i] == '<')
+		return (*i += 1, new_token("<", TOKEN_REDIR_IN));
+	else if (input[*i] == '>' && input[*i + 1] == '>')
+		return (*i += 2, new_token(">>", TOKEN_REDIR_APPEND));
+	else
+		return (*i += 1, new_token(">", TOKEN_REDIR_OUT));
+	return (NULL);
+}
+
+t_token	*read_word_token(const char *input, int *i)
+{
+	int		end;
+	char	*value;
+	t_token	*token;
+
+	if (find_word_end(input, *i, &end))
+	{
+		ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2);
+		return (NULL);
+	}
+	value = ft_substr(input, *i, end - *i);
+	if (!value)
+		return (NULL);
+	token = new_token(value, TOKEN_WORD);
+	free(value);
+	*i = end;
+	return (token);
+}
+
+t_token	*tokenize(char *input)
+{
+	int		i;
+	t_token	*head;
+	t_token	*next;
+
+	head = NULL;
+	i = 0;
+	while (input[i])
+	{
+		while (is_space(input[i]))
+			i++;
+		if (!input[i])
+			break ;
+		if (is_operator_char(input[i]))
+			next = read_operator(input, &i);
+		else
+			next = read_word_token(input, &i);
+		if (!next)
+			return (free_tokens(head), NULL);
+		token_add_back(&head, next);
+	}
+	next = new_token("", TOKEN_END);
+	if (!next)
+		return (free_tokens(head), NULL);
+	return (token_add_back(&head, next), head);
+}
