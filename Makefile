@@ -6,7 +6,7 @@
 #    By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/25 14:42:29 by sarayapa          #+#    #+#              #
-#    Updated: 2026/08/01 17:08:22 by sarayapa         ###   ########.fr        #
+#    Updated: 2026/09/09 17:13:42 by sarayapa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,18 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-FILES = minishell_main.c \
-		parser_env.c \
-		parser_env_utils.c \
-		parser_lexer.c \
+FILES = main.c \
+		minishell_env.c \
+		minishell_env_utils.c \
+		minishell_token.c \
+		minishell_stderr.c \
+		parser_lexer_main.c \
 		parser_lexer_utils.c \
-		parser_token.c \
-#		parser_token_utils.c \
+		parser_syntax_main.c \
+		parser_expansion_main.c \
+		parser_expansion_utils.c \
+		parser_expansion_var.c \
+		parser_expansion_quote.c \
 
 SRCS = srcs/
 BUILD = builds/

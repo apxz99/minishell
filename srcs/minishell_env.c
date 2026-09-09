@@ -1,17 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_env.c                                       :+:      :+:    :+:   */
+/*   minishell_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 11:46:45 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/08/01 16:52:23 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/09 14:44:57 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+init_env - Initialize the environment list.
+Return: 0 on success, 1 on allocation failure.
+*/
 int	init_env(t_shell *shell, char **envp)
 {
 	t_env	*node;
@@ -29,6 +33,10 @@ int	init_env(t_shell *shell, char **envp)
 	return (0);
 }
 
+/*
+new_env - Create a new environment node.
+Return: New node, or NULL on failure.
+*/
 t_env	*new_env(char *envp)
 {
 	t_env	*node;
@@ -58,6 +66,10 @@ t_env	*new_env(char *envp)
 	return (node);
 }
 
+/*
+env_last - Find the last node in the environment list.
+Return: Last node, or NULL if the list is empty.
+*/
 t_env	*env_last(t_env *lst)
 {
 	while (lst && lst->next)
@@ -65,6 +77,10 @@ t_env	*env_last(t_env *lst)
 	return (lst);
 }
 
+/*
+env_addback - Add a node to the end of the environment list.
+Return: Nothing.
+*/
 void	env_addback(t_env **lst, t_env *new)
 {
 	t_env	*last;
@@ -78,6 +94,10 @@ void	env_addback(t_env **lst, t_env *new)
 	last->next = new;
 }
 
+/*
+get_env - Find an environment variable by key.
+Return: Variable value, or NULL if not found.
+*/
 char	*get_env(t_env *env, char *key)
 {
 	t_env	*temp;

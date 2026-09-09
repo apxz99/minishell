@@ -1,17 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_lexer.c                                     :+:      :+:    :+:   */
+/*   parser_lexer_main.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 16:26:17 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/08/01 17:20:41 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/09 15:44:06 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+read_operator - Read an operator and create its token.
+Return: New operator token, or NULL on failure.
+*/
 t_token	*read_operator(const char *input, int *i)
 {
 	if (input[*i] == '|')
@@ -27,6 +31,10 @@ t_token	*read_operator(const char *input, int *i)
 	return (NULL);
 }
 
+/*
+read_word_token - Read a word and create a word token.
+Return: New word token, or NULL on failure.
+*/
 t_token	*read_word_token(const char *input, int *i)
 {
 	int		end;
@@ -35,7 +43,7 @@ t_token	*read_word_token(const char *input, int *i)
 
 	if (find_word_end(input, *i, &end))
 	{
-		ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2);
+		print_error(ERR_UNCLOSED_QUOTE, NULL);
 		return (NULL);
 	}
 	value = ft_substr(input, *i, end - *i);
@@ -47,6 +55,10 @@ t_token	*read_word_token(const char *input, int *i)
 	return (token);
 }
 
+/*
+tokenize - Convert the input string into a token list.
+Return: Token list, or NULL on error.
+*/
 t_token	*tokenize(char *input)
 {
 	int		i;

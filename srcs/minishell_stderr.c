@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_env_utils.c                                 :+:      :+:    :+:   */
+/*   minishell_stderr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/01 16:52:44 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/08/01 16:53:41 by sarayapa         ###   ########.fr       */
+/*   Created: 2026/09/09 14:48:42 by sarayapa          #+#    #+#             */
+/*   Updated: 2026/09/09 14:58:08 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_env(t_env *env)
+/*
+print_error - Print an error message to stderr.
+Return: Nothing.
+*/
+void	print_error(t_error error, char *value)
 {
-	t_env	*next;
-
-	while (env)
+	if (error == ERR_SYNTAX)
 	{
-		next = env->next;
-		free(env->key);
-		free(env->value);
-		free(env);
-		env = next;
+		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+		ft_putstr_fd(value, 2);
+		ft_putstr_fd("'\n", 2);
 	}
+	else if (error == ERR_UNCLOSED_QUOTE)
+		ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2);
 }

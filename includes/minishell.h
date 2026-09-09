@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 14:33:36 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/08/01 16:34:57 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/09 19:37:39 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,17 @@ typedef enum e_redir_type
 	REDIR_HEREDOC
 }	t_redir_type;
 
+typedef enum e_error
+{
+	ERR_SYNTAX,
+	ERR_UNCLOSED_QUOTE,
+}	t_error;
+
 typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
-	t_quote			qouted;
+	int				heredoc_quoted;
 	struct s_token	*next;
 }	t_token;
 
@@ -82,9 +88,9 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	t_env			*env;
-	t_cmd			*cmds;
-	t_token			*token;
+	t_env		*env;
+	t_cmd		*cmds;
+	t_token		*token;
 	int			exit_status;
 }	t_shell;
 
@@ -92,12 +98,12 @@ void	print_tokens(t_token *tokens);
 t_token	*tokenize(char *input);
 int		init_shell(t_shell *shell, char **envp);
 
-char 	*env_finder(char *str, char **envp);
+char	*env_finder(char *str, char **envp);
 void	env_addback(t_env **lst, t_env *new);
-t_env 	*env_last(t_env *lst);
-t_env 	*new_env(char *envp);
+t_env	*env_last(t_env *lst);
+t_env	*new_env(char *envp);
 char	*get_env(t_env *env, char *key);
-char	*get_promt(t_env *env, char *str);
+char	*get_prompt(t_env *env, char *str);
 
 void	loop(t_shell *shell);
 int		check_args(int ac, char **av, char **envp);
@@ -112,5 +118,20 @@ int		is_space(char c);
 void	free_tokens(t_token *token);
 void	print_tokens(t_token *tokens);
 void	token_add_back(t_token **head, t_token *new);
+
+int		syntax_check(t_token *token);
+
+void	print_error(t_error error, char *value);
+
+char	*append_char(char *str, char c);
+char	*append_string(char *str, char *append);
+
+t_token	*expand_tokens(t_token *tokens, t_shell *shell);
+int		expand_word(t_token *token, t_shell *shell);
+int		expand_dollar(char *value, int *i, char **result, t_shell *shell);
+t_quote	update_quote(t_quote quote, char c);
+
+int		is_var_char(char c);
+int		append_word_char(char *value, int *i, char **result);
 
 #endif
