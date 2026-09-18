@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 14:49:02 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/18 15:20:34 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 20:02:54 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,14 @@ int	main(int ac, char **av, char **envp)
 	if (check_args(ac, av, envp))
 		return (1);
 	shell = ft_calloc(1, sizeof(t_shell));
-	if (init_shell(shell, envp))
+	if (!shell)
 		return (1);
+	if (init_shell(shell, envp))
+	{
+		free_env(shell->env);
+		free(shell);
+		return (1);
+	}
 	loop(shell);
 	free_env(shell->env);
 	free(shell);
@@ -37,9 +43,13 @@ void	handle_line(t_shell *shell, char *input)
 
 	token = tokenize(input);
 	if (!token)
+	{
+		shell->exit_status = 2;
 		return ;
+	}
 	if (syntax_check(token))
 	{
+		shell->exit_status = 2;
 		free_tokens(token);
 		return ;
 	}
@@ -61,7 +71,7 @@ void	loop(t_shell *shell)
 
 	while (1)
 	{
-		input = readline("$ ");
+		input = readline("minishell: ");
 		if (!input)
 		{
 			free(input);
@@ -90,8 +100,6 @@ Return: 0 on success, 1 on error.
 int	init_shell(t_shell *shell, char **envp)
 {
 	shell->env = NULL;
-	shell->cmds = NULL;
-	shell->token = NULL;
 	if (init_env(shell, envp))
 		return (1);
 	return (0);

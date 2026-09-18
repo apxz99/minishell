@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 14:33:36 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/18 15:09:56 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 19:53:20 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ typedef struct s_cmd
 typedef struct s_shell
 {
 	t_env		*env;
-	t_cmd		*cmds;
-	t_token		*token;
 	int			exit_status;
 }	t_shell;
 

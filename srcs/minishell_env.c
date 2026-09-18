@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 11:46:45 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/09 14:44:57 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 19:27:07 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*get_env(t_env *env, char *key)
 	temp = env;
 	while (temp)
 	{
-		if (ft_strncmp(temp->key, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(temp->key, key, ft_strlen(key) + 1) == 0)
 			return (temp->value);
 		temp = temp->next;
 	}
