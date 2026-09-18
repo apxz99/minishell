@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 15:30:25 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/18 19:58:04 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 20:59:27 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ t_token	*expand_tokens(t_token *tokens, t_shell *shell)
 	{
 		if (current->type == TOKEN_WORD)
 		{
-			if (!prev || prev->type != TOKEN_HEREDOC)
+			if (prev && prev->type == TOKEN_HEREDOC)
 			{
-				if (expand_word(current, shell))
+				if (strip_quote(current))
 					return (NULL);
 			}
+			else if (expand_word(current, shell))
+				return (NULL);
 		}
 		prev = current;
 		current = current->next;
@@ -52,8 +54,8 @@ int	expand_word(t_token *token, t_shell *shell)
 	i = 0;
 	while (token->value[i])
 	{
-		if (is_quote(token->value[i]))
-			quote = update_quote(quote, token->value[i++]);
+		if (quote_step(&quote, token->value[i]))
+			i++;
 		else if (token->value[i] == '$' && quote != Q_SINGLE)
 		{
 			if (expand_dollar(token->value, &i, &result, shell))

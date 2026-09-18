@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 14:33:36 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/18 19:53:20 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 20:58:54 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,7 @@ t_quote	update_quote(t_quote quote, char c);
 
 int		is_var_char(char c);
 int		append_word_char(char *value, int *i, char **result);
+int		strip_quote(t_token *token);
+int		quote_step(t_quote *quote, char c);
 
 #endif

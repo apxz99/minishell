@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 16:26:17 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/09 15:44:06 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 20:30:23 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ t_token	*read_word_token(const char *input, int *i)
 	if (!value)
 		return (NULL);
 	token = new_token(value, TOKEN_WORD);
+	if (!token)
+	{
+		free(value);
+		return (NULL);
+	}
+	if (ft_strchr(value, '"') || ft_strchr(value, '\''))
+		token->heredoc_quoted = 1;
 	free(value);
 	*i = end;
 	return (token);
