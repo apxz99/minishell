@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 15:30:38 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/18 21:00:08 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 21:02:43 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_quote	update_quote(t_quote quote, char c)
 int	quote_step(t_quote *quote, char c)
 {
 	t_quote	next;
-	
+
 	next = update_quote(*quote, c);
 	if (next == *quote)
 		return (0);
