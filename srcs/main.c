@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 14:49:02 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/09 19:32:16 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 15:20:34 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,35 @@ int	main(int ac, char **av, char **envp)
 {
 	t_shell	*shell;
 
+	if (check_args(ac, av, envp))
+		return (1);
 	shell = ft_calloc(1, sizeof(t_shell));
-	if (check_args(ac, av, envp) || init_shell(shell, envp))
+	if (init_shell(shell, envp))
 		return (1);
 	loop(shell);
 	free_env(shell->env);
 	free(shell);
 	return (0);
+}
+
+void	handle_line(t_shell *shell, char *input)
+{
+	t_token	*token;
+
+	token = tokenize(input);
+	if (!token)
+		return ;
+	if (syntax_check(token))
+	{
+		free_tokens(token);
+		return ;
+	}
+	if (!expand_tokens(token, shell))
+	{
+		free_tokens(token);
+		return ;
+	}
+	free_tokens(token);
 }
 
 /*
@@ -36,49 +58,18 @@ Return: Nothing.
 void	loop(t_shell *shell)
 {
 	char	*input;
-	char	*prompt;
 
 	while (1)
 	{
-		prompt = get_prompt(shell->env, "$ ");
-		input = readline(prompt);
-		free(prompt);
-		if (!input || ft_strncmp(input, "exit", 4) == 0)
+		input = readline("$ ");
+		if (!input)
 		{
 			free(input);
 			break ;
 		}
-		shell->token = tokenize(input);
-		if (syntax_check(shell->token))
-		{
-			free_tokens(shell->token);
-			shell->token = NULL;
-			continue ;
-		}
-		if (!expand_tokens(shell->token, shell))
-		{
-			free_tokens(shell->token);
-			shell->token = NULL;
-			continue ;
-		}
-		print_tokens(shell->token);
-		free_tokens(shell->token);
+		handle_line(shell, input);
 		free(input);
 	}
-}
-
-/*
-get_promt - Create the shell prompt from the current directory.
-Return: Allocated prompt string.
-*/
-char	*get_prompt(t_env *env, char *str)
-{
-	char	*prompt;
-	char	*temp;
-
-	temp = get_env(env, "PWD");
-	prompt = ft_strjoin(temp, str);
-	return (prompt);
 }
 
 /*

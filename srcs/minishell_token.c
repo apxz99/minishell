@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/01 16:12:52 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/09 19:37:41 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 15:10:06 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,5 @@ void	free_tokens(t_token *token)
 		free(token->value);
 		free(token);
 		token = next;
-	}
-}
-
-/*
-print_tokens - Print all tokens and their types.
-Return: Nothing.
-*/
-void	print_tokens(t_token *tokens)
-{
-	while (tokens)
-	{
-		printf("[%-s]%*s type:%d\n", tokens->value,
-			20 - (int)ft_strlen(tokens->value), "", tokens->type);
-		tokens = tokens->next;
 	}
 }

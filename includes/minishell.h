@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 14:33:36 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/09 19:37:39 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/18 15:09:56 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ typedef struct s_shell
 	int			exit_status;
 }	t_shell;
 
-void	print_tokens(t_token *tokens);
 t_token	*tokenize(char *input);
 int		init_shell(t_shell *shell, char **envp);
 
@@ -103,7 +102,6 @@ void	env_addback(t_env **lst, t_env *new);
 t_env	*env_last(t_env *lst);
 t_env	*new_env(char *envp);
 char	*get_env(t_env *env, char *key);
-char	*get_prompt(t_env *env, char *str);
 
 void	loop(t_shell *shell);
 int		check_args(int ac, char **av, char **envp);
@@ -116,7 +114,6 @@ int		is_operator_char(char c);
 int		is_quote(char c);
 int		is_space(char c);
 void	free_tokens(t_token *token);
-void	print_tokens(t_token *tokens);
 void	token_add_back(t_token **head, t_token *new);
 
 int		syntax_check(t_token *token);
