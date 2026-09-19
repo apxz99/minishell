@@ -6,7 +6,7 @@
 #    By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/25 14:42:29 by sarayapa          #+#    #+#              #
-#    Updated: 2026/09/09 17:13:42 by sarayapa         ###   ########.fr        #
+#    Updated: 2026/09/19 19:01:46 by sarayapa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ FILES = main.c \
 		minishell_env_utils.c \
 		minishell_token.c \
 		minishell_stderr.c \
+		parser_run.c\
 		parser_lexer_main.c \
 		parser_lexer_utils.c \
 		parser_syntax_main.c \
