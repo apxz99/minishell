@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 14:33:36 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/19 19:01:51 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/20 15:10:17 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,10 @@ int		append_word_char(char *value, int *i, char **result);
 int		strip_quote(t_token *token);
 int		quote_step(t_quote *quote, char c);
 void	handle_line(t_shell *shell, char *input);
+
+t_cmd	*build_commands(t_token *tokens);
+void	free_cmds(t_cmd *cmd);
+void	free_redirs(t_redir *redir);
+void	cmd_add_back(t_cmd **head, t_cmd *new);
 
 #endif

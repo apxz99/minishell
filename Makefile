@@ -6,7 +6,7 @@
 #    By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/25 14:42:29 by sarayapa          #+#    #+#              #
-#    Updated: 2026/09/19 19:01:46 by sarayapa         ###   ########.fr        #
+#    Updated: 2026/09/20 14:45:50 by sarayapa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ FILES = main.c \
 		parser_expansion_utils.c \
 		parser_expansion_var.c \
 		parser_expansion_quote.c \
+		parser_cmd_build.c \
+		
 
 SRCS = srcs/
 BUILD = builds/

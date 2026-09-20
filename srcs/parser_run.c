@@ -6,11 +6,11 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/19 19:01:07 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/19 19:02:54 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/20 15:41:22 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell"
+#include "minishell.h"
 
 void	handle_line(t_shell *shell, char *input)
 {
@@ -33,5 +33,6 @@ void	handle_line(t_shell *shell, char *input)
 		free_tokens(token);
 		return ;
 	}
+	//build_commands(token);
 	free_tokens(token);
 }
