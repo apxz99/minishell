@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 14:44:33 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/20 18:18:45 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/20 18:28:23 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	collect_redir(t_cmd *cmd, t_token **token)
 	t_redir	*current;
 	t_redir *node;
 
+	if ((*token)->next->type != TOKEN_WORD)
+		return (1);
 	node = redir_new(*token);
 	if (!node)
 		return 1;
