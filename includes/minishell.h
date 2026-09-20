@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 14:33:36 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/20 15:10:17 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/20 17:13:27 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	t_env		*env;
-	int			exit_status;
+	t_env	*env;
+	int		exit_status;
 }	t_shell;
 
 t_token	*tokenize(char *input);
@@ -136,5 +136,10 @@ t_cmd	*build_commands(t_token *tokens);
 void	free_cmds(t_cmd *cmd);
 void	free_redirs(t_redir *redir);
 void	cmd_add_back(t_cmd **head, t_cmd *new);
+int		count_args(t_token *tokens);
+t_cmd	*cmd_new(void);
+void	cmd_add_back(t_cmd **head, t_cmd *new);
+void	free_cmds(t_cmd *cmd);
+void	free_redirs(t_redir *r);
 
 #endif

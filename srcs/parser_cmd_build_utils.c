@@ -1,40 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_run.c                                       :+:      :+:    :+:   */
+/*   parser_cmd_build_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/19 19:01:07 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/20 17:12:07 by sarayapa         ###   ########.fr       */
+/*   Created: 2026/09/20 17:56:10 by sarayapa          #+#    #+#             */
+/*   Updated: 2026/09/20 17:56:30 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_line(t_shell *shell, char *input)
+int	need_cmd(t_cmd **cmd)
 {
-	t_token	*token;
-	t_cmd	*cmds;
-
-	token = tokenize(input);
-	if (!token)
-	{
-		shell->exit_status = 2;
-		return ;
-	}
-	if (syntax_check(token))
-	{
-		shell->exit_status = 2;
-		free_tokens(token);
-		return ;
-	}
-	if (!expand_tokens(token, shell))
-	{
-		free_tokens(token);
-		return ;
-	}
-	cmds = build_commands(token);
-	free_tokens(token);
-	free_cmds(cmds);
+	if (*cmd == NULL)
+		*cmd = cmd_new();
+	return (*cmd == NULL);
 }
