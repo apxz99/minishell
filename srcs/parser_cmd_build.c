@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 14:44:33 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/20 17:51:31 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/20 18:18:45 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ t_redir	*redir_new(t_token *token)
 	}
 	return (node);
 }
-int	collect_redir(t_cmd *cmd, t_token *token)
+int	collect_redir(t_cmd *cmd, t_token **token)
 {
 	t_redir	*current;
 	t_redir *node;
 
-	node = redir_new(token);
+	node = redir_new(*token);
 	if (!node)
 		return 1;
 	if (cmd->redirs == NULL)
@@ -73,49 +73,41 @@ int	collect_redir(t_cmd *cmd, t_token *token)
 			current = current->next;
 		current->next = node;
 	}
+	*token = (*token)->next;
 	return (0);
 }
 
-t_cmd	*build_fail(t_cmd *head, t_cmd *cmd)
+int	build_token(t_cmd **head, t_cmd **cmd, t_token **tok)
 {
-	free_cmds(head);
-	free_cmds(cmd);
-	return (NULL);
+	if ((*tok)->type == TOKEN_PIPE)
+	{
+		cmd_add_back(head, *cmd);
+		*cmd = NULL;
+		return (0);
+	}
+	if (*cmd == NULL)
+		*cmd = cmd_new();
+	if (*cmd == NULL)
+			return (1);
+	if ((*tok)->type == TOKEN_WORD)
+		return (collect_args(*cmd, *tok));
+	return (collect_redir(*cmd, tok));
 }
 
 t_cmd	*build_commands(t_token *tokens)
 {
 	t_cmd	*cmd;
 	t_cmd	*head;
-
-	cmd = NULL;
 	head = NULL;
+	cmd = NULL;
 	while (tokens->type != TOKEN_END)
 	{
-		if (tokens->type == TOKEN_WORD)
-		{
-			if (cmd == NULL)
-				cmd = cmd_new();
-			if (cmd == NULL)
-				return (build_fail(head, cmd));
-			if (collect_args(cmd, tokens))
-				return (build_fail(head, cmd));	
-		}
-		else if (tokens->type == TOKEN_PIPE)
-		{
-			cmd_add_back(&head, cmd);
-			cmd = NULL;
-		}
-		else
-		{
-			if (cmd == NULL)
-				cmd = cmd_new();
-			if (cmd == NULL)
-				return (build_fail(head, cmd));
-			if (collect_redir(cmd, tokens))
-				return (build_fail(head, cmd));
-			tokens = tokens->next;
-		}
+		if (build_token(&head, &cmd, &tokens))
+			{
+				free_cmds(head);
+				free_cmds(cmd);
+				return (NULL);
+			}
 		tokens = tokens->next;
 	}
 	if (cmd)
