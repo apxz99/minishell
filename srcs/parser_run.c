@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/19 19:01:07 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/20 17:12:07 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/23 18:06:44 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ void	handle_line(t_shell *shell, char *input)
 	t_cmd	*cmds;
 
 	token = tokenize(input);
-	if (!token)
-	{
-		shell->exit_status = 2;
-		return ;
-	}
-	if (syntax_check(token))
+	if (!token || syntax_check(token))
 	{
 		shell->exit_status = 2;
 		free_tokens(token);
@@ -36,5 +31,8 @@ void	handle_line(t_shell *shell, char *input)
 	}
 	cmds = build_commands(token);
 	free_tokens(token);
+	if (!cmds)
+		return ;
+	execute(cmds, shell);
 	free_cmds(cmds);
 }

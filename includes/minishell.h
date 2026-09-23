@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 14:33:36 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/20 17:13:27 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/23 18:06:46 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,22 +90,21 @@ typedef struct s_shell
 {
 	t_env	*env;
 	int		exit_status;
+	int		exit_flag;
 }	t_shell;
 
+// Parser 
 t_token	*tokenize(char *input);
 int		init_shell(t_shell *shell, char **envp);
-
 char	*env_finder(char *str, char **envp);
 void	env_addback(t_env **lst, t_env *new);
 t_env	*env_last(t_env *lst);
 t_env	*new_env(char *envp);
 char	*get_env(t_env *env, char *key);
-
 void	loop(t_shell *shell);
 int		check_args(int ac, char **av, char **envp);
 int		init_env(t_shell *shell, char **envp);
 void	free_env(t_env *env);
-
 t_token	*new_token(char const *value, t_token_type type);
 int		find_word_end(const char *s, int start, int *end);
 int		is_operator_char(char c);
@@ -113,33 +112,27 @@ int		is_quote(char c);
 int		is_space(char c);
 void	free_tokens(t_token *token);
 void	token_add_back(t_token **head, t_token *new);
-
 int		syntax_check(t_token *token);
-
 void	print_error(t_error error, char *value);
-
 char	*append_char(char *str, char c);
 char	*append_string(char *str, char *append);
-
 t_token	*expand_tokens(t_token *tokens, t_shell *shell);
 int		expand_word(t_token *token, t_shell *shell);
 int		expand_dollar(char *value, int *i, char **result, t_shell *shell);
 t_quote	update_quote(t_quote quote, char c);
-
 int		is_var_char(char c);
 int		append_word_char(char *value, int *i, char **result);
 int		strip_quote(t_token *token);
 int		quote_step(t_quote *quote, char c);
 void	handle_line(t_shell *shell, char *input);
-
 t_cmd	*build_commands(t_token *tokens);
 void	free_cmds(t_cmd *cmd);
 void	free_redirs(t_redir *redir);
 void	cmd_add_back(t_cmd **head, t_cmd *new);
 int		count_args(t_token *tokens);
 t_cmd	*cmd_new(void);
-void	cmd_add_back(t_cmd **head, t_cmd *new);
-void	free_cmds(t_cmd *cmd);
-void	free_redirs(t_redir *r);
+
+// Executor
+void	execute(t_cmd *cmds, t_shell *shell);
 
 #endif

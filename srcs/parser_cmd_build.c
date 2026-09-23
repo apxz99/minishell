@@ -6,7 +6,7 @@
 /*   By: sarayapa <sarayapa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 14:44:33 by sarayapa          #+#    #+#             */
-/*   Updated: 2026/09/20 18:28:23 by sarayapa         ###   ########.fr       */
+/*   Updated: 2026/09/23 17:39:02 by sarayapa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,17 @@ t_redir	*redir_new(t_token *token)
 	}
 	return (node);
 }
+
 int	collect_redir(t_cmd *cmd, t_token **token)
 {
 	t_redir	*current;
-	t_redir *node;
+	t_redir	*node;
 
 	if ((*token)->next->type != TOKEN_WORD)
 		return (1);
 	node = redir_new(*token);
 	if (!node)
-		return 1;
+		return (1);
 	if (cmd->redirs == NULL)
 		cmd->redirs = node;
 	else
@@ -90,7 +91,7 @@ int	build_token(t_cmd **head, t_cmd **cmd, t_token **tok)
 	if (*cmd == NULL)
 		*cmd = cmd_new();
 	if (*cmd == NULL)
-			return (1);
+		return (1);
 	if ((*tok)->type == TOKEN_WORD)
 		return (collect_args(*cmd, *tok));
 	return (collect_redir(*cmd, tok));
@@ -100,16 +101,17 @@ t_cmd	*build_commands(t_token *tokens)
 {
 	t_cmd	*cmd;
 	t_cmd	*head;
+
 	head = NULL;
 	cmd = NULL;
 	while (tokens->type != TOKEN_END)
 	{
 		if (build_token(&head, &cmd, &tokens))
-			{
-				free_cmds(head);
-				free_cmds(cmd);
-				return (NULL);
-			}
+		{
+			free_cmds(head);
+			free_cmds(cmd);
+			return (NULL);
+		}
 		tokens = tokens->next;
 	}
 	if (cmd)
